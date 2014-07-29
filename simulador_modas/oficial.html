@@ -1,0 +1,367 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+<link rel="stylesheet" href="css/oficial.css">
+<script type="text/javaScript" src="js/jquery.js"> 
+</script>
+<script src="js/jquery.imageLens.js"></script>
+
+<script type="text/javascript" src="js/jquery.backstretch.min.js"></script>
+
+<script>
+	$(document).ready(function(e) {
+        $.backstretch(["img/fondos/fondo2.jpg"]);
+		    
+    });
+</script>
+
+
+<script type="text/javaScript">
+$(document).ready(inicio);
+   function inicio(){
+	setTimeout("sexo()",500);
+	setTimeout("sexo()",1000);
+	setTimeout("comenzar()",500);
+	setTimeout("zoom()",1000);
+	setTimeout("dibujar()",2000);
+	//retrasamos la funcion dibujo duranet un seg para cargar la img
+
+	$("#archivo").change(archivo);
+	$("#efectos").change(efectos);
+	$("#sexo").change(sexo);
+	}
+	//funcion que permite limpiar el canvas
+	function nuevo(){
+	var canvas=document.getElementById("micanvas");
+	var contexto=canvas.getContext("2d");
+	contexto.clearRect(0,0,390,550);
+	}
+	//funcion archivo el cual es un selecc para las opreaciones basicas de un archivo
+	function archivo(){
+		if($("#archivo").attr("value") == "nuevo"){
+		var canvas=document.getElementById("micanvas");
+		var contexto=canvas.getContext("2d");
+		contexto.clearRect(0,0,390,550);
+		}
+		if($("#archivo").attr("value") == "abrir"){
+		$("body").append("<form method='POST' action='abrir.php' enctype='multipart/form-data'><input type='file' name='archivo'><input type='submit'></form>'");
+		}
+		if($("#archivo").attr("value") == "cerrar"){
+		var canvas=document.getElementById("micanvas");
+		var contexto=canvas.getContext("2d");
+		contexto.clearRect(0,0,390,550);
+		}
+		if($("#archivo").attr("value") == "guardar"){
+		var canvas=document.getElementById("micanvas");
+		var contexto=canvas.getContext("2d");
+		window.location=canvas.toDataURL("document/doc");
+		}
+	}
+	//funcion de ingreso de datos de tipo voz
+	function reconocimiento_voz(){
+	<!--se hace referencia al atributo valor de vocal:id de campo de voz-->
+		if($("#vocal").attr("value") == "negativo"){
+		var canvas = document.getElementById("micanvas");
+		var contexto = canvas.getContext("2d");
+		var imageData=contexto.getImageData(0,0,390,550);
+		var data=imageData.data;
+			for(var i=0;i<data.length;i+=4){
+			data[i]=255-data[i];
+			data[i+1]=255-data[i+1];
+			data[i+2]=255-data[i+2];
+			}
+		contexto.putImageData(imageData,0,0);
+		}
+		if($("#vocal").attr("value") == "aclarar"){
+		var canvas = document.getElementById("micanvas");
+		var contexto = canvas.getContext("2d");
+		var imageData=contexto.getImageData(0,0,390,550);
+		var data=imageData.data;
+			for(var i=0;i<data.length;i+=4){
+			data[i]=data[i]+100;
+			data[i+1]=data[i+1]+100;
+			data[i+2]=data[i+2]+100;
+			}
+		contexto.putImageData(imageData,0,0);
+		}
+		if($("#vocal").attr("value") == "escalacrises"){
+		var canvas = document.getElementById("micanvas");
+		var contexto = canvas.getContext("2d");
+		var imageData=contexto.getImageData(0,0,390,550);
+		var data=imageData.data;
+			for(var i=0;i<data.length;i+=4){
+			data[i]=(data[i]+data[i+1]+data[i+1])/3;
+			data[i+1]=(data[i]+data[i+1]+data[i+1])/3;
+			data[i+2]=(data[i]+data[i+1]+data[i+1])/3;
+			}
+		contexto.putImageData(imageData,0,0);
+		}
+		if($("#vocal").attr("value") == "solarizar"){
+		var canvas = document.getElementById("micanvas");
+		var contexto = canvas.getContext("2d");
+		var imageData=contexto.getImageData(0,0,390,550);
+		var data=imageData.data;
+			for(var i=0;i<data.length;i+=4){
+				if(data[i]<122){data[i]=0} else{data[i]=255}
+				if(data[i+1]<122){data[i+1]=0} else{data[i+1]=255}
+				if(data[i+2]<122){data[i+2]=0} else{data[i+2]=255}
+			}
+		contexto.putImageData(imageData,0,0);
+		}
+
+	}
+	//funcion efectos para las imagenes que se encuentren dentro del canvas
+	function efectos(){
+		if($("#efectos").attr("value") == "negativo"){
+		var canvas = document.getElementById("micanvas");
+		var contexto = canvas.getContext("2d");
+		var imageData=contexto.getImageData(0,0,390,550);
+		var data=imageData.data;
+			for(var i=0;i<data.length;i+=4){
+			data[i]=255-data[i];
+			data[i+1]=255-data[i+1];
+			data[i+2]=255-data[i+2];
+			}
+		contexto.putImageData(imageData,0,0);
+		}
+		if($("#efectos").attr("value") == "aclarar"){
+		var canvas = document.getElementById("micanvas");
+		var contexto = canvas.getContext("2d");
+		var imageData=contexto.getImageData(0,0,390,550);
+		var data=imageData.data;
+			for(var i=0;i<data.length;i+=4){
+			data[i]=data[i]+100;
+			data[i+1]=data[i+1]+100;
+			data[i+2]=data[i+2]+100;
+			}
+		contexto.putImageData(imageData,0,0);
+		}
+		if($("#efectos").attr("value") == "escalacrises"){
+		var canvas = document.getElementById("micanvas");
+		var contexto = canvas.getContext("2d");
+		var imageData=contexto.getImageData(0,0,390,550);
+		var data=imageData.data;
+			for(var i=0;i<data.length;i+=4){
+			data[i]=(data[i]+data[i+1]+data[i+1])/3;
+			data[i+1]=(data[i]+data[i+1]+data[i+1])/3;
+			data[i+2]=(data[i]+data[i+1]+data[i+1])/3;
+			}
+		contexto.putImageData(imageData,0,0);
+		}
+		if($("#efectos").attr("value") == "solarizar"){
+		var canvas = document.getElementById("micanvas");
+		var contexto = canvas.getContext("2d");
+		var imageData=contexto.getImageData(0,0,390,550);
+		var data=imageData.data;
+			for(var i=0;i<data.length;i+=4){
+			if(data[i]<122){data[i]=0} else{data[i]=255}
+			if(data[i+1]<122){data[i+1]=0} else{data[i+1]=255}
+			if(data[i+2]<122){data[i+2]=0} else{data[i+2]=255}
+			}
+		contexto.putImageData(imageData,0,0);
+		}
+	}
+	//funcion que permite seleccionar el sexo del cliente
+	function sexo(){
+		if($("#sexo").attr("value") == "femenino"){
+		nuevo();
+		var canvas=document.getElementById("micanvas");
+		var contexto=canvas.getContext("2d");
+		var img= new Image();
+		img.src="img/img_dama/img0010.png";
+		var alto=img.height;
+		var ancho=img.width;
+		var altura_m=img.height;
+		var ancho_m=img.width;
+		var altura_canvas=canvas.height;
+		var ancho_canvas=canvas.width;
+		posicion_x=(ancho_canvas/2)-(ancho_m/2);
+		posicion_y=(altura_canvas/2)-(altura_m/2);
+		contexto.drawImage(img,posicion_x,posicion_y);
+		cargar_img_mujer();
+		//PRIMER IMAGEN CON MOUSEOVER
+		var Img1 = document.createElement('img');
+		Img1.src = 'img/img_dama/img003.png';
+		Img1.onload = function () { 
+		contexto.drawImage(Img1, 0, 0, 50, 50); 
+		}
+				var down = false;
+				contexto.canvas.addEventListener('mousedown', function () { 
+					down = true; 
+				}, false);
+				contexto.canvas.addEventListener('mouseup', function () { 
+					down = false; 
+				}, false);
+				contexto.canvas.addEventListener('mousemove', function (event) {
+					if (down){
+					   	nuevo();
+						contexto.drawImage(img,posicion_x,posicion_y);
+					  
+						contexto.drawImage(Img1, event.clientX - this.offsetLeft,
+						event.clientY - this.offsetTop);
+					}
+			
+				}, false);
+				     
+		
+		}
+		
+		if($("#sexo").attr("value") == "masculino"){
+		nuevo();
+		var objeto_actual=null , inicioX=0, inicioY=0;
+		var canvas=document.getElementById("micanvas");
+		var contexto=canvas.getContext("2d");
+		var img= new Image();
+		img.src="img/img_varon/ModeloBase.png";
+		var a=img.width;
+		var b=img.height;
+		var c=canvas.width;
+		var d=canvas.height;
+		var e=(c/2)-(a/2);
+		var f=(d/2)-(b/2);
+		contexto.drawImage(img,e,f);
+		cargar_img_hombre();
+		//PRIMER IMAGEN CON MOUSEOVER
+		var Img1 = document.createElement('img');
+		Img1.src = 'img/img_varon/img3.png';
+		Img1.onload = function () { 
+		contexto.drawImage(Img1, 0, 0, 50, 50); 
+		}
+				var down = false;
+				contexto.canvas.addEventListener('mousedown', function () { 
+					down = true; 
+				}, false);
+				contexto.canvas.addEventListener('mouseup', function () { 
+					down = false; 
+				}, false);
+				contexto.canvas.addEventListener('mousemove', function (event) {
+					if (down){
+					   	nuevo();
+						contexto.drawImage(img,e,f);
+					  
+						contexto.drawImage(Img1, event.clientX - this.offsetLeft,
+						event.clientY - this.offsetTop);
+					}
+			
+				}, false);
+				     
+		}
+	}
+	//funcion para dibujar el fondo de inicio
+	function dibujar(){
+
+	var canvas=document.getElementById("micanvas");
+	var contexto=canvas.getContext("2d");
+	var img= new Image();
+	img.src="img/fondos/fondo01.png";
+//alert();
+	contexto.drawImage(img,0,0);
+	}
+	//funcion para la presentacion de prendas
+	function comenzar(){
+	$("#herramientas div img").on("click",abrir_full);
+	$("#presentacion").on("click",cerrar_full);
+	}
+	function abrir_full(){
+	var nombre=$(this).attr('src');
+	$("#imgFull").attr('src',nombre);
+	$("#presentacion").fadeIn();
+	}
+	function cerrar_full(){
+	$("#presentacion").fadeOut();
+	}
+	//funcion de vizualizacion
+	function zoom(){
+	$("#imgFull").imageLens();
+	//$("#ejemplo1").imageLens({ lensSize: 300 });
+	//$("#ejemplo2").imageLens({ imageSrc: "img/brasier1.png", lensSize: 120 });
+					
+			//});	
+	}
+	//funcion para cargar las prendas en los divs
+	function cargar_img_mujer(){
+		for(i=1;i<13;i++){
+		var direccion="img/img_dama/img00"+i+".png";
+		$("#galeriaFull"+i).attr('src',direccion);//le asignamos a src el valor de dirreccion
+		$("#herramientas div img").fadeIn();
+		}
+	}
+	function cargar_img_hombre(){
+		for(i=1;i<13;i++){
+		var direccion="img/img_varon/img"+i+".png";
+		//alert(direccion);
+		//alert(direccion);
+		$("#galeriaFull"+i).attr('src',direccion);//le asignamos a src el valor de dirreccion
+		$("#herramientas div img").fadeIn();
+		}
+	}
+
+</script>
+
+</head>
+<body>
+
+	<div id="contenedor" >
+    <header>
+    <div id="logo"><img src="img/LOGO.png" width="690" height="200"  alt=""/></div>
+		<nav>
+			<select id="archivo">
+			<option value=""><p>Archivo</p></option>
+			<option value="nuevo">Nuevo</option>
+			<option value="abrir">Abrir</option>
+			<option value="cerrar">Cerrar</option>
+			<option value="guardar">Guardar</option>
+			</select>
+			<select id="efectos">
+			<option value="">Efectos</option>
+			<option value="negativo">Nagativo</option>
+			<option value="aclarar">Aclarar</option>
+			<option value="escalacrises">Escala de crises</option>
+			<option value="solarizar">Solarizar</option>
+			</select>
+			<select id="sexo">
+			<option value="">Sexo</option>
+			<option value="masculino">Masculino</option>
+			<option value="femenino">Femenino</option>
+			</select>
+
+				
+			<!--introducimos un capo de usuario para reconocimiento de voz con el modificador x- web-->
+			<input type="text" x-webkit-speech id="vocal" onwebkitspeechchange="reconocimiento_voz()"> 
+			<!--conectar el reconocimiento vocal con el nucleo del programa
+			onwebkitsspeechchange: cada vez que se cambie el reconocimiento de este capo podre ejecutar una funcion
+			-->
+		</nav>
+		<div id="center">
+		<div id="herramientas">
+		<!--<div class="herramienta"><img  src="img/fondo.png" id="ejemplo" width="130px"
+		height="80px" draggable="true"   ></div>-->
+		  <div id="galeria1" class="herramienta"><img src="" id="galeriaFull1" /></div>
+			<div id="galeria2" class="herramienta"><img src="" id="galeriaFull2"/></div>
+			<div id="galeria3" class="herramienta"><img src="" id="galeriaFull3"/></div>
+			<div id="galeria4" class="herramienta"><img src="" id="galeriaFull4"/></div>
+			<div id="galeria5" class="herramienta"><img src="" id="galeriaFull5"/></div>
+			<div id="galeria6" class="herramienta"><img src="" id="galeriaFull6"/></div>
+
+		</div>
+		
+		<canvas id="micanvas" width=390 height=550></canvas>
+		
+		<div id="herramientas">
+			<div id="galeria7" class="herramienta"><img src="" id="galeriaFull7"/></div>
+			<div id="galeria8" class="herramienta"><img src="" id="galeriaFull8"/></div>
+			<div id="galeria9" class="herramienta"><img src="" id="galeriaFull9"/></div>
+			<div id="galeria10" class="herramienta"><img src="" id="galeriaFull10"/></div>
+			<div id="galeria11" class="herramienta"><img src="" id="galeriaFull11"/></div>
+			<div id="galeria12" class="herramienta"><img src="" id="galeriaFull12"/></div>
+		</div>
+		</div>
+		
+		<div id="presentacion"><img src="" id="imgFull"/></div>
+	</div>
+
+    </header>
+</body>
+</html>
